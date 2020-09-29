@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "engine": "v2",
+  "file": "out.js",
+  "sourceRoot": "",
+  "sources": ["org-dartlang-sdk:///lib/_internal/js_runtime/lib/rti.dart","sheets.dart"],
+  "names": ["_Universe.addRules","_Universe.addErasedTypes","_Utils.objectAssign","main","objectAssign","addRules","addErasedTypes","throwCyclicInit","closureFromTearOff","int","double","num","String","bool","Null","List","findType"],
+  "mappings": "A;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAilDaA;wBADCA;MACRA,gDAA+CA;K;8BAEvCC;MACRA,OAAOA,yCAA0CA;K;yBA+7CzCC;MAGeA;;;MACzBA;kBAE2BA;;;IAE7BA,C;;;UCzhGFC;IAAOA,C",
+  "x_org_dartlang_dart2js": {
+    "minified_names": {
+      "global": "_Utils_objectAssign,4,main,3,_Universe_addRules,5,_Universe_addErasedTypes,6,throwCyclicInit,7,closureFromTearOff,8,int,9,double,10,num,11,String,12,bool,13,Null,14,List,15,findType,16",
+      "instance": ""
+    },
+    "frames": ""
+  }
+}
