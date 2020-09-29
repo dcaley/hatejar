@@ -1,4 +1,4 @@
-# fart
+# hatejar
 
 A new Flutter project.
 
