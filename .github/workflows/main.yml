@@ -20,11 +20,11 @@ jobs:
       - run: |
           cd build/web
           git init
-          # type configurations: your user.email and user.name followed lines 
+          # type configurations: your user.email and user.name followed lines
           git config --global user.email davidcaley@gmail.com
           git config --global user.name dcaley
           git status
-          git remote add origin https://${{45e9b2adb4fba99c37804ad1712d2dc4c4529536}}@github.com/dcaley/hatejar.git
+          git remote add origin https://${{secrets.commit_secret}}@github.com/onatcipli/flutter_web.git
           git checkout -b master
           git add --all
           git commit -m "update"
