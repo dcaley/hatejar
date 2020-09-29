@@ -26,6 +26,6 @@ jobs:
           git status
           git remote add origin https://${{secrets.commit_secret}}@github.com/dcaley/hatejar.git
           git checkout -b gh-pages
-          git add --all
-          git commit -m "update"
-          git push origin gh-pages -f
+          git add .
+          git commit -m "Updated docs"
+          git push --force secure-origin gh-pages
