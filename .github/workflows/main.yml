@@ -25,7 +25,7 @@ jobs:
           git config --global user.name dcaley
           git status
           git remote add origin https://${{secrets.commit_secret}}@github.com/dcaley/hatejar.git
-          git checkout -b hatejar
+          git checkout -b gh-pages
           git add --all
           git commit -m "update"
-          git push origin hatejar -f
+          git push origin gh-pages -f
