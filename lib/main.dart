@@ -51,7 +51,7 @@ class PageState extends State<Page> {
   ScrollController gridScroll = new ScrollController();
   int hovered = -1;
 
-  MyHomePageState(){
+  PageState(){
     Timer.periodic(Duration(seconds: 10), (timer) {
       setState((){
         getValues();
