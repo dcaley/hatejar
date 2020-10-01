@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 final baseURL = 'https://script.google.com/macros/s/AKfycbycDYx2WMPYk7enunUNTUl80iJmiRknaHL_Z7_MNoec4FANngw/exec?';
+final LinkedHashMap<String, int> values = new LinkedHashMap();
 
 void main() async{
   await getValues();
@@ -13,13 +14,11 @@ void main() async{
 
 getValues() async{
   var response = await http.get( baseURL + 'action=getAll' );
-  values = new LinkedHashMap();
+  // reverse to put newest entries at the top
   for( String row in new List.from( response.body.trim().split('\n').reversed )){
     values[ row.split('\t')[0] ] = int.parse(row.split('\t')[1]);
   }
 }
-
-LinkedHashMap<String, int> values;
 
 class HateJar extends StatelessWidget {
 
@@ -38,9 +37,7 @@ class HateJar extends StatelessWidget {
 
 class Page extends StatefulWidget {
   Page({Key key, this.title}) : super(key: key);
-
   final String title;
-
   @override
   PageState createState() => PageState();
 }
@@ -48,14 +45,12 @@ class Page extends StatefulWidget {
 class PageState extends State<Page> {
 
   TextEditingController controller = new TextEditingController();
-  ScrollController gridScroll = new ScrollController();
   int hovered = -1;
 
   PageState(){
+    // get new values from the server
     Timer.periodic(Duration(seconds: 10), (timer) {
-      setState((){
-        getValues();
-      });
+      setState(() => getValues());
     });
   }
 
@@ -66,11 +61,14 @@ class PageState extends State<Page> {
       String value = response.body.split('\t')[0];
       int count = int.parse(response.body.split('\t')[1]);
       if(values.containsKey(value)){
+        // If a card is clicked rapidly, the server calls can get behind.
+        // Since the count only ever increases, only overwite with a higher number.
         if (values[value] < count) {
           values[value] = count;
         }
       }
       else{
+        // this seems to be the simplest way to insert an item at the front of a LinkedHashMap
         LinkedHashMap<String, int> newMap = new LinkedHashMap();
         newMap[value] = count;
         newMap.addAll(values);
@@ -78,6 +76,13 @@ class PageState extends State<Page> {
         values.addAll(newMap);
       }
     });
+  }
+
+  void onOkPressed(){
+    if( controller.text.trim().isNotEmpty ) {
+      addItem(controller.text);
+      Navigator.pop(context);
+    }
   }
 
   void showAddDialog() async{
@@ -88,12 +93,7 @@ class PageState extends State<Page> {
     );
     Widget continueButton = FlatButton(
         child: Text("Continue"),
-        onPressed: () {
-          if( controller.text.trim().isNotEmpty ) {
-            addItem(controller.text);
-          Navigator.pop(context);
-          }
-        }
+        onPressed: () => onOkPressed()
     );
 
     Widget alert = AlertDialog(
@@ -101,6 +101,7 @@ class PageState extends State<Page> {
       content: TextField(
         autofocus: true,
         controller: controller,
+        onSubmitted: (value) => onOkPressed(),
       ),
       actions: [
         cancelButton,
@@ -130,7 +131,6 @@ class PageState extends State<Page> {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           childAspectRatio: 2,
-          controller: gridScroll,
           children: List.generate(values.length, (index) {
             return Container(
                 padding: EdgeInsets.all(10),
